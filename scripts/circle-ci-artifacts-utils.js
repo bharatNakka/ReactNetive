@@ -21,7 +21,7 @@ let jobs;
 let baseTemporaryPath;
 
 async function initialize(circleCIToken, baseTempPath, branchName) {
-  console.info('Getting CircleCI infoes');
+  console.info('Getting CircleCI information');
   circleCIHeaders = {'Circle-Token': circleCIToken};
   baseTemporaryPath = baseTempPath;
   exec(`mkdir -p ${baseTemporaryPath}`);
@@ -29,9 +29,7 @@ async function initialize(circleCIToken, baseTempPath, branchName) {
   const packageAndReleaseWorkflow = await _getPackageAndReleaseWorkflow(
     pipeline.id,
   );
-  _throwIfPendingOrUnsuccessfulWorkflow(packageAndReleaseWorkflow);
   const testsWorkflow = await _getTestsWorkflow(pipeline.id);
-  _throwIfPendingOrUnsuccessfulWorkflow(testsWorkflow);
   const jobsPromises = [
     _getCircleCIJobs(packageAndReleaseWorkflow.id),
     _getCircleCIJobs(testsWorkflow.id),
@@ -44,14 +42,6 @@ async function initialize(circleCIToken, baseTempPath, branchName) {
 
 function baseTmpPath() {
   return baseTemporaryPath;
-}
-
-async function _throwIfPendingOrUnsuccessfulWorkflow(workflow) {
-  if (workflow.status !== 'success') {
-    throw new Error(
-      `The ${workflow.name} workflow status is ${workflow.status}. Please, wait for it to be finished before start testing or fix it`,
-    );
-  }
 }
 
 async function _getLastCircleCIPipelineID(branchName) {
@@ -69,7 +59,15 @@ async function _getLastCircleCIPipelineID(branchName) {
     throw new Error(error);
   }
 
-  const lastPipeline = JSON.parse(response.body).items[0];
+  const items = JSON.parse(response.body).items;
+
+  if (!items || items.length === 0) {
+    throw new Error(
+      'No pipelines found on this branch. Make sure that the CI has run at least once, successfully',
+    );
+  }
+
+  const lastPipeline = items[0];
   return {id: lastPipeline.id, number: lastPipeline.number};
 }
 
@@ -85,7 +83,17 @@ async function _getSpecificWorkflow(pipelineId, workflowName) {
   }
 
   const body = JSON.parse(response.body);
-  return body.items.find(workflow => workflow.name === workflowName);
+  let workflow = body.items.find(workflow => workflow.name === workflowName);
+  _throwIfWorkflowNotFound(workflow, workflowName);
+  return workflow;
+}
+
+function _throwIfWorkflowNotFound(workflow, name) {
+  if (!workflow) {
+    throw new Error(
+      `Can't find a workflow named ${name}. Please check whether that workflow has started.`,
+    );
+  }
 }
 
 async function _getPackageAndReleaseWorkflow(pipelineId) {
@@ -128,9 +136,28 @@ async function _getJobsArtifacts(jobNumber) {
 
 async function _findUrlForJob(jobName, artifactPath) {
   const job = jobs.find(j => j.name === jobName);
+  _throwIfJobIsNull(job);
+  _throwIfJobIsUnsuccessful(job);
+
   const artifacts = await _getJobsArtifacts(job.job_number);
   return artifacts.find(artifact => artifact.path.indexOf(artifactPath) > -1)
     .url;
+}
+
+function _throwIfJobIsNull(job) {
+  if (!job) {
+    throw new Error(
+      `Can't find a job with name ${job.name}. Please verify that it has been executed and that all its dependencies completed successfully.`,
+    );
+  }
+}
+
+function _throwIfJobIsUnsuccessful(job) {
+  if (job.status !== 'success') {
+    throw new Error(
+      `The job ${job.name} status is ${job.status}. We need a 'success' status to proceed with the testing.`,
+    );
+  }
 }
 
 async function artifactURLHermesDebug() {
