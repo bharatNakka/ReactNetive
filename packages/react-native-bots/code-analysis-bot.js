@@ -222,7 +222,7 @@ async function main(messages, owner, repo, pull_number) {
 
   if (!process.env.GITHUB_TOKEN) {
     console.log(
-      'Missing GITHUB_TOKEN. Example: 5fd88b964fa214c4be2b144dc5af5d486a2f8c1e. Review feedback with code analysis results will not be provided on GitHub without a valid token.',
+     // 'Missing GITHUB_TOKEN. Example: 5fd88b964fa214c4be2b144dc5af5d486a2f8c1e. Review feedback with code analysis results will not be provided on GitHub without a valid token.',
     );
   }
 
