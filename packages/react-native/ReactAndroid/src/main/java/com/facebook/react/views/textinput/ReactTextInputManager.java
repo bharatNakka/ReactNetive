@@ -165,7 +165,7 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
   private static final String KEYBOARD_TYPE_DECIMAL_PAD = "decimal-pad";
   private static final String KEYBOARD_TYPE_NUMBER_PAD = "number-pad";
   private static final String KEYBOARD_TYPE_PHONE_PAD = "phone-pad";
-  private static final String KEYBOARD_TYPE_VISIBLE_PASSWORD = "visible-password";
+  //private static final String KEYBOARD_TYPE_VISIBLE_PASSWORD = "visible-password";
   private static final String KEYBOARD_TYPE_URI = "url";
   private static final InputFilter[] EMPTY_FILTERS = new InputFilter[0];
   private static final int UNSET = -1;
