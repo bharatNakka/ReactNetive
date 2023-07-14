@@ -110,7 +110,7 @@ class ReactEditTextInputConnectionWrapper extends InputConnectionWrapper {
     // Assume not a keyPress if length > 1 (or 2 if unicode)
     if (key.length() <= 2) {
       if (key.equals("")) {
-        key = BACKSPACE_KEY_VALUE;
+       //
       }
       dispatchKeyEventOrEnqueue(key);
     }
