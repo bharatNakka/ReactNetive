@@ -15,38 +15,38 @@ import android.widget.EditText;
 /** Local state bearer for EditText instance. */
 public final class ReactTextInputLocalData {
 
-  private final SpannableStringBuilder mText;
-  private final float mTextSize;
-  private final int mMinLines;
-  private final int mMaxLines;
-  private final int mInputType;
-  private final int mBreakStrategy;
-  private final CharSequence mPlaceholder;
+  // private final SpannableStringBuilder mText;
+  // private final float mTextSize;
+  // private final int mMinLines;
+  // private final int mMaxLines;
+  // private final int mInputType;
+  // private final int mBreakStrategy;
+  // private final CharSequence mPlaceholder;
 
-  public ReactTextInputLocalData(EditText editText) {
-    mText = new SpannableStringBuilder(editText.getText());
-    mTextSize = editText.getTextSize();
-    mInputType = editText.getInputType();
-    mPlaceholder = editText.getHint();
-    mMinLines = editText.getMinLines();
-    mMaxLines = editText.getMaxLines();
+  // public ReactTextInputLocalData(EditText editText) {
+  //   mText = new SpannableStringBuilder(editText.getText());
+  //   mTextSize = editText.getTextSize();
+  //   mInputType = editText.getInputType();
+  //   mPlaceholder = editText.getHint();
+  //   mMinLines = editText.getMinLines();
+  //   mMaxLines = editText.getMaxLines();
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      mBreakStrategy = editText.getBreakStrategy();
-    } else {
-      mBreakStrategy = 0;
-    }
-  }
+  //   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+  //     mBreakStrategy = editText.getBreakStrategy();
+  //   } else {
+  //     mBreakStrategy = 0;
+  //   }
+  // }
 
-  public void apply(EditText editText) {
-    editText.setText(mText);
-    editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
-    editText.setMinLines(mMinLines);
-    editText.setMaxLines(mMaxLines);
-    editText.setInputType(mInputType);
-    editText.setHint(mPlaceholder);
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-      editText.setBreakStrategy(mBreakStrategy);
-    }
-  }
+  // public void apply(EditText editText) {
+  //   editText.setText(mText);
+  //   editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
+  //   editText.setMinLines(mMinLines);
+  //   editText.setMaxLines(mMaxLines);
+  //   editText.setInputType(mInputType);
+  //   editText.setHint(mPlaceholder);
+  //   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+  //     editText.setBreakStrategy(mBreakStrategy);
+  //   }
+  // }
 }
