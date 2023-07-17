@@ -101,7 +101,7 @@ public class WritableNativeMapTest {
 
   @Test
   public void testErrorMessageContainsKey() {
-    String key = "fkg";
+    String key;
     try {
       mMap.getString(key);
       Assert.fail("Expected an NoSuchKeyException to be thrown");
