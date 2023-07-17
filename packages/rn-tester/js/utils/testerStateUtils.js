@@ -94,44 +94,7 @@ export const getExamplesListWithBookmarksAndRecentlyUsed = ({
 
   const bookmarkedAPIs = apis.filter(apiExample => apiExample.isBookmarked);
 
-  const examplesList: ExamplesList = {
-    [Screens.COMPONENTS]: [
-      {
-        key: 'RECENT_COMPONENTS',
-        data: recentlyUsedComponents,
-        title: 'Recently Viewed',
-      },
-      {
-        key: 'COMPONENTS',
-        data: components,
-        title: 'Components',
-      },
-    ],
-    [Screens.APIS]: [
-      {
-        key: 'RECENT_APIS',
-        data: recentlyUsedAPIs,
-        title: 'Recently viewed',
-      },
-      {
-        key: 'APIS',
-        data: apis,
-        title: 'APIs',
-      },
-    ],
-    [Screens.BOOKMARKS]: [
-      {
-        key: 'COMPONENTS',
-        data: bookmarkedComponents,
-        title: 'Components',
-      },
-      {
-        key: 'APIS',
-        data: bookmarkedAPIs,
-        title: 'APIs',
-      },
-    ],
-  };
+  
 
   return filterEmptySections(examplesList);
 };
