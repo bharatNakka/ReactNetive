@@ -49,9 +49,9 @@ import com.facebook.react.uimanager.events.EventDispatcher;
  * pressed.
  */
 class ReactEditTextInputConnectionWrapper extends InputConnectionWrapper {
-  public static final String NEWLINE_RAW_VALUE = "\n";
+ // public static final String NEWLINE_RAW_VALUE = "\n";
   public static final String BACKSPACE_KEY_VALUE = "Backspace";
-  public static final String ENTER_KEY_VALUE = "Enter";
+  //public static final String ENTER_KEY_VALUE = "Enter";
 
   private ReactEditText mEditText;
   private EventDispatcher mEventDispatcher;
@@ -152,9 +152,7 @@ class ReactEditTextInputConnectionWrapper extends InputConnectionWrapper {
   }
 
   private void dispatchKeyEvent(String key) {
-    if (key.equals(NEWLINE_RAW_VALUE)) {
-      key = ENTER_KEY_VALUE;
-    }
+    
     mEventDispatcher.dispatchEvent(new ReactTextInputKeyPressEvent(mEditText.getId(), key));
   }
 }
