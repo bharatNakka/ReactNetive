@@ -171,7 +171,7 @@ export default function TextLegend(): React.Node {
                 End of text
               </Text>,
               <View
-                key="start of text view"
+               
                 style={{
                   top: y,
                   height: height,
